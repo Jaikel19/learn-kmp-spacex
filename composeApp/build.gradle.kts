@@ -40,6 +40,7 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
+        implementation(projects.shared)
         implementation(libs.compose.runtime)
         implementation(libs.compose.foundation)
         implementation(libs.compose.material3)
@@ -52,6 +53,14 @@ kotlin {
         implementation(libs.kotlinx.datetime)
 
         testImplementation(libs.kotlin.test)
+
+        // Koin
+        implementation(project.dependencies.platform(libs.koin.bom))
+        implementation(libs.koin.compose)
+        implementation(libs.koin.compose.viewmodel)
+        implementation(libs.koin.compose.viewmodel.navigation)
+
+
     }
 
     sourceSets {
