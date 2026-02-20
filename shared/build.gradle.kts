@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.androidLint)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -57,6 +58,27 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
+        commonMain.dependencies {
+            // ... other dependencies
+            // Coroutine
+            implementation(libs.kotlinx.coroutines.core)
+
+            // DateTime
+            implementation(libs.kotlinx.datetime)
+
+            // Ktor
+            implementation(project.dependencies.platform(libs.ktor.bom))
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+        }
+        commonTest.dependencies {
+            // ... other dependencies
+            // Coroutine
+            implementation(libs.kotlinx.coroutines.test)
+            // Ktor
+            implementation(libs.ktor.client.mock)
+        }
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
@@ -81,27 +103,8 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
-            }
-            commonMain.dependencies {
-                // ... other dependencies
-                // Coroutine
-                implementation(libs.kotlinx.coroutines.core)
-
-                // DateTime
-                implementation(libs.kotlinx.datetime)
-
-                // Ktor
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.serialization.kotlinx.json)
-            }
-            commonTest.dependencies {
-                // ... other dependencies
-                // Coroutine
-                implementation(libs.kotlinx.coroutines.test)
-                // Ktor
-                implementation(libs.ktor.client.mock)
+                // SQLDelight
+                implementation(libs.sqldelight.driver.android)
             }
         }
 
@@ -116,8 +119,21 @@ kotlin {
         iosMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
+
+                // SQLDelight
+                implementation(libs.sqldelight.driver.native)
             }
         }
     }
 
+}
+
+// at the end of the file
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("compose.project.demo.composedemo.data.local")
+        }
+    }
+    linkSqlite = true
 }
