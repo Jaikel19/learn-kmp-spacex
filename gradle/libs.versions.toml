@@ -1,4 +1,5 @@
  [versions]
+ mokkery = "3.2.0"
  sqldelight = "2.2.1"
  ktor = "3.4.0"
  kotlinx-coroutines = "1.10.2"
@@ -81,6 +82,9 @@ androidx-runner = { group = "androidx.test", name = "runner", version.ref = "run
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 
 [plugins]
+ # Mock
+ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+
 # SQLDelight
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 

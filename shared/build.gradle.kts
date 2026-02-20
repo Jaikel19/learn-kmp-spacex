@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.androidLint)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -130,10 +131,6 @@ kotlin {
 
 // at the end of the file
 sqldelight {
-    databases {
-        create("AppDatabase") {
-            packageName.set("compose.project.demo.composedemo.data.local")
-        }
-    }
+    databases { create("AppDatabase") { packageName.set("compose.project.demo.composedemo.data.local") } }
     linkSqlite = true
 }
